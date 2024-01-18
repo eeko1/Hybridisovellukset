@@ -1,1 +1,3 @@
-# Hybridisovellukset
+#Hybridisovellukset
+
+Kurssin yksilöprojektin backend serverit.
