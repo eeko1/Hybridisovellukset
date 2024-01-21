@@ -1,16 +1,4 @@
-# Hybridisovellukset
-
-Kurssin yksilöprojektin backend serverit.
-
-# SQL Database Setup
-
-## Database diagram
-
-![Database Diagram](./project-diagram.png)
-
-## Database script
-
-```SQL
+-- Drop the database if it exists and then create it
 DROP DATABASE IF EXISTS MusicReviewApp;
 CREATE DATABASE MusicReviewApp;
 USE MusicReviewApp;
@@ -88,11 +76,9 @@ CREATE TABLE MusicItemTags (
     FOREIGN KEY (music_id) REFERENCES MusicItems(music_id),
     FOREIGN KEY (tag_id) REFERENCES Tags(tag_id)
 );
-```
 
-## Insert Into Mock Data
+-- Insert the sample data
 
-```SQL
 INSERT INTO UserLevels (level_name) VALUES ('Admin'), ('User'), ('Banned');
 
 INSERT INTO Users (username, password, email, user_level_id) VALUES
@@ -109,7 +95,7 @@ INSERT INTO MusicItems (user_id, filename, filesize, media_type, title, descript
 
 INSERT INTO Comments (music_id, user_id, comment_text) VALUES
 (1, 2, 'Absolutely love the classical vibes!'),
-(2, 1, 'Pop Sensation is a catchy hit!'),
+(2, 1, 'Rap Sensation is a catchy hit!'),
 (3, 3, 'Jazzy Jam is my go-to single for relaxation.'),
 (4, 2, 'Rocking Solo lives up to its name! Amazing.');
 
@@ -126,11 +112,10 @@ INSERT INTO Ratings (music_id, user_id, rating_value) VALUES
 (2, 1, 4),
 (1, 3, 4);
 
-INSERT INTO Tags (tag_name) VALUES ('Classical', 'Pop', 'Jazz', 'Rock');
+INSERT INTO Tags (tag_name) VALUES ('Classical', 'Rap', 'Jazz', 'Rock');
 
 INSERT INTO MusicItemTags (music_id, tag_id) VALUES
 (1, 1),
 (2, 2),
 (3, 3),
 (4, 4);
-```
