@@ -12,6 +12,12 @@ import {
   ApolloServerPluginLandingPageLocalDefault,
   ApolloServerPluginLandingPageProductionDefault,
 } from '@apollo/server/plugin/landingPage/default';
+import {makeExecutableSchema} from '@graphql-tools/schema';
+import {
+  constraintDirectiveTypeDefs,
+  createApollo4QueryValidationPlugin,
+} from 'graphql-constraint-directive/apollo4';
+import {MyContext} from './local-types';
 
 const app = express();
 
@@ -28,10 +34,15 @@ const app = express();
       res.send({message: 'Server is running'});
     });
 
-    const server = new ApolloServer({
-      typeDefs,
+    const schema = makeExecutableSchema({
+      typeDefs: [constraintDirectiveTypeDefs, typeDefs],
       resolvers,
+    });
+
+    const server = new ApolloServer<MyContext>({
+      schema,
       plugins: [
+        createApollo4QueryValidationPlugin({schema}),
         process.env.NODE_ENV === 'production'
           ? ApolloServerPluginLandingPageProductionDefault()
           : ApolloServerPluginLandingPageLocalDefault(),

@@ -1,6 +1,6 @@
 import {User, UserWithNoPassword} from '@sharedTypes/DBTypes';
 import {fetchData} from '../../lib/functions';
-import {UserResponse} from '@sharedTypes/MessageTypes';
+import {LoginResponse, UserResponse} from '@sharedTypes/MessageTypes';
 
 export default {
   Query: {
@@ -29,6 +29,21 @@ export default {
       };
       const user = await fetchData<UserResponse>(
         process.env.AUTH_SERVER + '/users',
+        options,
+      );
+      return user;
+    },
+    login: async (
+      _parent: undefined,
+      args: Pick<User, 'username' | 'password'>,
+    ) => {
+      const options = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(args),
+      };
+      const user = await fetchData<LoginResponse>(
+        process.env.AUTH_SERVER + '/auth/login',
         options,
       );
       return user;
